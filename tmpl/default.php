@@ -12,6 +12,7 @@ if ($cache->check()) {
 }
 else {
 	$cache->start();
+	$modid = rand(0, 9999);
 	$o_year = $params->get("o_year", "desc") == "desc";
 	$o_month = $params->get("o_month") == "desc";
 	$show_number = $params->get("show_number", 1);
@@ -25,15 +26,15 @@ else {
 	echo '<ul class="lca">';
 	foreach ($data->articulos as $year=>$months) {
 		echo '<li class="lca">';
-			echo '<span onclick="lca.f(0,'.$iyear.')" class="lca">';
+			echo '<span onclick="lca.f(0,'.$iyear.','.$modid.')" class="lca">';
 			if ($img)
-				echo '<img id="lca_0a_'.$iyear.'" class="lca" src="'.$collapse.'" alt="" />';
+				echo '<img id="lca_'.$modid.'_0a_'.$iyear.'" class="lca" src="'.$collapse.'" alt="" />';
 			else 
-				echo '<span id="lca_0a_'.$iyear.'">'.$collapse.'</span>';
+				echo '<span id="lca_'.$modid.'_0a_'.$iyear.'">'.$collapse.'</span>';
 			echo ' '.$year.'</span>';
 			if ($show_number)
 				echo ' ('.$data->years[$year].')';
-			echo '<ul class="lca" id="lca_0_'.$iyear.'" style="display: none">';
+			echo '<ul class="lca" id="lca_'.$modid.'_0_'.$iyear.'" style="display: none">';
 			foreach ($months as $month=>$articles) {
 				if (count($articles)) {
 					if ($o_year) {
@@ -45,15 +46,15 @@ else {
 					elseif ($iyear == count($data->articulos) && (!$o_month || !$search))
 						$search = $imonth;	
 					echo '<li class="lca">';
-						echo '<span onclick="lca.f(1,'.$imonth.')" class="lca">';
+						echo '<span onclick="lca.f(1,'.$imonth.','.$modid.')" class="lca">';
 						if ($img)
-							echo '<img id="lca_1a_'.$imonth.'" class="lca" src="'.$collapse.'" alt="" />';
+							echo '<img id="lca_'.$modid.'_1a_'.$imonth.'" class="lca" src="'.$collapse.'" alt="" />';
 						else
-							echo '<span id="lca_1a_'.$imonth.'">'.$collapse.'</span>';
+							echo '<span id="lca_'.$modid.'_1a_'.$imonth.'">'.$collapse.'</span>';
 						echo ' '.$month.'</span>';
 						if ($show_number)
 							echo ' ('.$data->meses[$year][$month].')';
-						echo '<ul class="lca" id="lca_1_'.$imonth.'" style="display: none">';
+						echo '<ul class="lca" id="lca_'.$modid.'_1_'.$imonth.'" style="display: none">';
 						foreach ($articles as $article)
 							 echo '<li class="lca">• '.$article.'</li>';
 						echo '</ul>';
@@ -66,8 +67,7 @@ else {
 		$iyear++;
 	}
 	echo '</ul>';
-	//buy pro version to hide copyright http://www.jonijnm.es/web/mod-lca.html
-	echo '<div style="text-align:right;font-size:xx-small">Powered by <a title="Module LCA for Joomla" href="http://www.jonijnm.es">mod LCA</a></div>';
+	$cache->modid = $modid;
 	$cache->show = ($o_year?1:count($data->articulos)).','.$search;
 	$cache->end();
 }
@@ -76,11 +76,11 @@ if ($params->get('allways_collapsed', 0)) {
 	$show = array(array(), array());
 }
 else {
-	$tmp = JRequest::getInt('lca0', '', 'COOKIE');
+	$tmp = JRequest::getInt('lca'.$cache->modid.'_0', 0, 'COOKIE');
 	if ($tmp > 0) {
 		$show = array(
 			array($tmp),
-			array(JRequest::getInt('lca1', '', 'COOKIE'))
+			array(JRequest::getInt('lca'.$cache->modid.'_1', 0, 'COOKIE'))
 		);
 	}
 	else {
@@ -96,11 +96,11 @@ echo "\n<script type=\"text/javascript\">\n";
 foreach ($show[0] as $s) {
 	$s = (int)$s;
 	if ($s > 0) 
-		echo "		lca.f(0,".$s.");\n"; 
+		echo "		lca.f(0,".$s.",".$cache->modid.");\n"; 
 }
 foreach ($show[1] as $s) {
 	$s = (int)$s;
 	if ($s > 0)
-		echo "		lca.f(1,".$s.");\n"; 
+		echo "		lca.f(1,".$s.",".$cache->modid.");\n"; 
 }
 echo "\n</script>\n";
