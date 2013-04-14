@@ -5,8 +5,8 @@ li.lca {
 	background:transparent none !important
 }
 ul.lca {
-	padding: 3px 0 0 0;
-	margin: 0
+	padding: 0 !important;
+	margin: 3px 0 !important
 }
 span.lca {
 	cursor:pointer;
