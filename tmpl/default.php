@@ -1,7 +1,7 @@
 <?php 
 
 /**
-* @Copyright Copyright (C) 2012 - JoniJnm.es
+* @Copyright Copyright (C) 2013 - JoniJnm.es
 * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
 **/
 
@@ -14,7 +14,7 @@ else {
 	$cache->start();
 	$modid = rand(0, 9999);
 	$o_year = $params->get("o_year", "desc") == "desc";
-	$o_month = $params->get("o_month") == "desc";
+	$cache->o_month = $params->get("o_month", "desc");
 	$show_number = $params->get("show_number", 1);
 	$search = 0;
 	$img = $params->get("img", 0);
@@ -37,29 +37,35 @@ else {
 			echo '<ul class="lca" id="lca_'.$modid.'_0_'.$iyear.'" style="display: none">';
 			foreach ($months as $month=>$articles) {
 				if (count($articles)) {
-					if ($o_year) {
-						if ($o_month)
-							$search = 1;
-						elseif ($iyear == 1)
-							$search = $imonth;
-					}
-					elseif ($iyear == count($data->articulos) && (!$o_month || !$search))
-						$search = $imonth;	
-					echo '<li class="lca">';
-						echo '<span onclick="lca.f(1,'.$imonth.','.$modid.')" class="lca">';
-						if ($img)
-							echo '<img id="lca_'.$modid.'_1a_'.$imonth.'" class="lca" src="'.$collapse.'" alt="" />';
-						else
-							echo '<span id="lca_'.$modid.'_1a_'.$imonth.'">'.$collapse.'</span>';
-						echo ' '.$month.'</span>';
-						if ($show_number)
-							echo ' ('.$data->meses[$year][$month].')';
-						echo '<ul class="lca" id="lca_'.$modid.'_1_'.$imonth.'" style="display: none">';
+					if ($cache->o_month == 'off') {
 						foreach ($articles as $article)
 							 echo '<li class="lca">• '.$article.'</li>';
-						echo '</ul>';
-					echo '</li>';
-					$imonth++;
+					}
+					else {
+						if ($o_year) {
+							if ($cache->o_month == 'desc')
+								$search = 1;
+							elseif ($iyear == 1)
+								$search = $imonth;
+						}
+						elseif ($iyear == count($data->articulos) && ($cache->o_month == 'asc' || !$search))
+							$search = $imonth;	
+						echo '<li class="lca">';
+							echo '<span onclick="lca.f(1,'.$imonth.','.$modid.')" class="lca">';
+							if ($img)
+								echo '<img id="lca_'.$modid.'_1a_'.$imonth.'" class="lca" src="'.$collapse.'" alt="" />';
+							else
+								echo '<span id="lca_'.$modid.'_1a_'.$imonth.'">'.$collapse.'</span>';
+							echo ' '.$month.'</span>';
+							if ($show_number)
+								echo ' ('.$data->meses[$year][$month].')';
+							echo '<ul class="lca" id="lca_'.$modid.'_1_'.$imonth.'" style="display: none">';
+							foreach ($articles as $article)
+								 echo '<li class="lca">• '.$article.'</li>';
+							echo '</ul>';
+						echo '</li>';
+						$imonth++;
+					}
 				}
 			}
 			echo '</ul>';
@@ -93,7 +99,7 @@ else {
 }
 	
 echo "\n<script type=\"text/javascript\">\n";
-lca.onLoad(function() {
+echo "lca.onLoad(function() {\n";
 foreach ($show[0] as $s) {
 	$s = (int)$s;
 	if ($s > 0) 
@@ -104,5 +110,5 @@ foreach ($show[1] as $s) {
 	if ($s > 0)
 		echo "		lca.f(1,".$s.",".$cache->modid.");\n"; 
 }
-});
+echo "\n});";
 echo "\n</script>\n";
