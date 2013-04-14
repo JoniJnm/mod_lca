@@ -1,5 +1,6 @@
-xx Apr 2013 - v1.0.5
+17 Apr 2013 - v1.0.5
 
++ Added new option: do not show months (pro version)
 + Added fr-FR language (thanks Laurent Rathle)
 
 05 Apr 2013 - v1.0.4
