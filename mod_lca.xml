@@ -2,7 +2,7 @@
 <!DOCTYPE install>
 <install type="module" version="1.5.0" method="upgrade">
 	<name>mod_lca</name>
-	<creationDate>05 Apr 2013</creationDate>
+	<creationDate>14 Apr 2013</creationDate>
 	<version>1.0.5</version>
 	<author>JoniJnm.es</author>
 	<description>Mod LCA shows articles sorted by year and month, such as wordpress or blogspot.</description>
