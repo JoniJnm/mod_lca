@@ -93,6 +93,7 @@ else {
 }
 	
 echo "\n<script type=\"text/javascript\">\n";
+lca.onLoad(function() {
 foreach ($show[0] as $s) {
 	$s = (int)$s;
 	if ($s > 0) 
@@ -103,4 +104,5 @@ foreach ($show[1] as $s) {
 	if ($s > 0)
 		echo "		lca.f(1,".$s.");\n"; 
 }
+});
 echo "\n</script>\n";

@@ -43,5 +43,10 @@ var lca = {
 			lca.month_opened = id;
 		else
 			lca.year_opened = id;
+	},
+	onLoad: function(func) {
+		if (window.addEventListener) window.addEventListener("load", func, false);
+		else if (window.attachEvent) window.attachEvent("onload", func);
+		else (func)();
 	}
 }
