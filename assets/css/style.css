@@ -1,0 +1,25 @@
+li.lca {
+	display:block;
+	padding:0 0 0 10px;
+	margin:0;
+	background:transparent none !important
+}
+ul.lca {
+	padding: 3px 0 0 0;
+	margin: 0
+}
+span.lca {
+	cursor:pointer;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+span.lca span {
+	font-family: arial
+}
+img.lca {
+	border:0;
+	padding:0
+}

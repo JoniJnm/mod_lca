@@ -1,0 +1,74 @@
+xx Apr 2013 - v1.0.5
+
++ Added fr-FR language (thanks Laurent Rathle)
+
+05 Apr 2013 - v1.0.4
+
+# Load xml cache file manually when it's malformed (thanks andka)
+# Fixed order by (thanks andka)
+
+25 Mar 2013 - v1.0.3
+
+^ Make arrow no selectable
+^ Improved JS and cache
+# Fixed PHP Strict Standars problem (thanks andka)
+
+10 Mar 2013 - v1.0.2
+
+# Added de-DE (thanks @adalbrosios)
+! de-DE added in v1.0.1 should be nl-NL (thanks @adalbrosios) 
+
+11 Feb 2013 - v1.0.1
+
++ Supports multiple instances (Pro version)
++ Supports Joomla 3.0
++ New option: sort by published date
+^ Added de-DE language (thanks Jefta Waldema)
+^ Added ru-RU language (SvM)
+
+22 Apr 2012 - v0.9.5
+
+# Fixed bug showing archived articles (thanks miqui)
+# Fixed bug showing articles in Joomla 1.5 
+
+20 Apr 2012 - v0.9.4
+
++ New option: show public articles (you can show only archived articles disabling this option)
+# Fixed bug saving year & month opened
+
+04 Mar 2012 - v0.9.3
+
+^ Save year & month opened
+
+19 Feb 2012 - v0.9.2
+
+# Fixed css
+! Module for Joomla 1.5, 1.6, 1.7 and 2.5 in the same .zip installer
+
+06 Nov 2012 - v0.9.1
+
+^ Improved SEO URLs
+
+16 Oct 2012 - v0.9.0
+
+^ New option: show archived articles
+# Fixed bug collapsing years
+
+28 Sep 2012 - v0.8.9
+
+^ Improved caching
+# Fixed bug when collapse month or year (thanks Phenom75)
+! Auto-collapse months and years when user open one of them
+
+04 Sep 2012 - v0.8.6
+
++ New option: show date next to article
+! Supports Joomla 1.7
+
+18 May 2012 - v0.8.5
+
++ New option: cut title (thanks bennystrasser.de)
++ New option: show registered articles (thanks bennystrasser.de)
++ Show day next to the article (thanks simovina)
++ New system of cache
+! Supports Joomla 1.6
