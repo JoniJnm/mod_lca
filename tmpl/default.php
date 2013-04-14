@@ -97,12 +97,12 @@ echo "lca.onLoad(function() {\n";
 foreach ($show[0] as $s) {
 	$s = (int)$s;
 	if ($s > 0) 
-		echo "		lca.f(0,".$s.",".$cache->modid.");\n"; 
+		echo "		lca.f(0,".$s.");\n"; 
 }
 foreach ($show[1] as $s) {
 	$s = (int)$s;
 	if ($s > 0)
-		echo "		lca.f(1,".$s.",".$cache->modid.");\n"; 
+		echo "		lca.f(1,".$s.");\n"; 
 }
 echo "\n});";
 echo "\n</script>\n";
