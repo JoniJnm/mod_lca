@@ -1,3 +1,7 @@
+03 May 2013 - v1.0.6
+
++ Added language filter option (thanks blrt)
+
 17 Apr 2013 - v1.0.5
 
 + Added new option: do not show months (pro version)

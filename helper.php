@@ -98,6 +98,9 @@ class modLcaHelper {
 			$access = ' AND (a.access='.($this->j15?0:1).' OR a.access='.($this->j15?1:2).')';
 		else
 			$access = ' AND (a.access='.($this->j15?0:1).')';
+			
+		$lang = $this->params->get('lang', '*');
+		$lang = $this->j15 || $lang=='*' ? '' : ' AND a.language="'.$lang.'"';
 		
 		$query = 'SELECT '.
 			$order.' '.
@@ -114,6 +117,7 @@ class modLcaHelper {
 			' AND c.published = 1'.
 			$secs.
 			$cats.
+			$lang.
 			' ORDER BY co '.$this->params->get("o_article", "desc");
 		if ($this->params->get("maxarticles", 150) > 0)
 			$query .= ' LIMIT '.$this->params->get("maxarticles", 150);
