@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install>
-<install type="module" version="1.5.0" method="upgrade">
+<install method="upgrade" type="module" version="1.5.0">
 	<name>mod_lca</name>
-	<creationDate>14 Apr 2013</creationDate>
-	<version>1.0.5</version>
+	<creationDate>05 May 2013</creationDate>
+	<version>1.0.7</version>
 	<author>JoniJnm.es</author>
 	<description>Mod LCA shows articles sorted by year and month, such as wordpress or blogspot.</description>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
@@ -22,6 +22,7 @@
 		<language tag="nl-NL">nl-NL.mod_lca.ini</language>
 		<language tag="ru-RU">ru-RU.mod_lca.ini</language>
 		<language tag="fr-FR">fr-FR.mod_lca.ini</language>
+		<language tag="hu-HU">hu-HU.mod_lca.ini</language>
 	</languages>
 	<params>
 		<param name="usecache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module">

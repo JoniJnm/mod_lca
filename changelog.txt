@@ -1,3 +1,7 @@
+05 May 2013 - v1.0.7
+
++ Added hu-HU language file (thanks jtherczeg)
+
 03 May 2013 - v1.0.6
 
 + Added language filter option (thanks blrt)
