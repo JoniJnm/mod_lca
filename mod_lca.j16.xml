@@ -35,6 +35,9 @@
 				</field>
 				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
 				<field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field label="JFIELD_LANGUAGE_LABEL" name="lang" type="contentlanguage" default="*">
+					<option value="*">JALL</option>
+				</field>
 				<field type="list" default="1" name="show_pub_articles" label="MOD_LCA_PUB_ARTICLES_T">
 					<option value="0">MOD_LCA_NO</option>
 					<option value="1">MOD_LCA_YES</option>
@@ -55,6 +58,7 @@
 				<field type="list" default="desc" name="o_month" label="MOD_LCA_O_MONTHS">
 					<option value="desc">MOD_LCA_DESC</option>
 					<option value="asc">MOD_LCA_ASC</option>
+					<option value="off">MOD_LCA_NOT_SHOW</option>
 				</field>
 				<field type="list" default="desc" name="o_article" label="MOD_LCA_O_ARTICLES">
 					<option value="desc">MOD_LCA_DESC</option>

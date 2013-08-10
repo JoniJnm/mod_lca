@@ -6,7 +6,7 @@
 **/
 
 class modLcaCache {	
-	const CVERSION = "f4";
+	const CVERSION = "p4";
 	var $params;
 	var $on;
 	var $expired;
@@ -15,6 +15,7 @@ class modLcaCache {
 	var $file;
 	var $xml;
 	var $show;
+	var $modid;
 	
 	function __construct(&$params) {
 		$this->params = $params;
@@ -36,7 +37,7 @@ class modLcaCache {
 		if (!file_exists($file)) return true;
 		$this->xml = @simplexml_load_file($this->file);
 		if ($this->xml) {
-			if (!isset($this->xml->show) || !isset($this->xml->date) || !isset($this->xml->html)) {
+			if (!isset($this->xml->modid) || !isset($this->xml->o_month) || !isset($this->xml->show) || !isset($this->xml->date) || !isset($this->xml->html)) {
 				return true;
 			}
 		}
@@ -44,6 +45,10 @@ class modLcaCache {
 			//malformed, load manually
 			$xml = file_get_contents($file);
 			$this->xml = new stdclass;
+			preg_match('#<modid>(.*?)</modid>#', $xml, $data); if (!$data) return true;
+			$this->xml->modid = $data[1];
+			preg_match('#<o_month>(.*?)</o_month>#', $xml, $data); if (!$data) return true;
+			$this->xml->o_month = $data[1];
 			preg_match('#<show>(.*?)</show>#', $xml, $data); if (!$data) return true;
 			$this->xml->show = $data[1];
 			preg_match('#<date>(.*?)</date>#', $xml, $data); if (!$data) return true;
@@ -55,6 +60,7 @@ class modLcaCache {
 	}
 	function show() {
 		$this->show = $this->xml->show;
+		$this->modid = $this->xml->modid;
 		echo $this->xml->html;
 	}
 	function check() {
@@ -73,7 +79,7 @@ class modLcaCache {
 				unlink($this->file);
 			if (!file_exists($this->path))
 				mkdir($this->path);
-			file_put_contents($this->file, '<xml><show>'.$this->show.'</show><date>'.(time()+$this->time).'</date><html><![CDATA['.$html.']]></html></xml>');
+			file_put_contents($this->file, '<xml><modid>'.$this->modid.'</modid><o_month>'.$this->o_month.'</o_month><show>'.$this->show.'</show><date>'.(time()+$this->time).'</date><html><![CDATA['.$html.']]></html></xml>');
 		}
 	}
 }

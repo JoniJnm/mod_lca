@@ -52,6 +52,7 @@
 		<param type="list" default="desc" name="o_month" label="MOD_LCA_O_MONTHS">
 			<option value="desc">MOD_LCA_DESC</option>
 			<option value="asc">MOD_LCA_ASC</option>
+			<option value="off">MOD_LCA_NOT_SHOW</option>
 		</param>
 		<param type="list" default="desc" name="o_article" label="MOD_LCA_O_ARTICLES">
 			<option value="desc">MOD_LCA_DESC</option>

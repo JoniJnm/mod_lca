@@ -7,10 +7,11 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-if (DEFINED("LCA_SHOWS")) return;
-
-require_once(dirname(__FILE__).'/helper.php');
-require_once(dirname(__FILE__).'/cache.php');
+if (!DEFINED("LCA_SHOWS")) {
+	define('LCA_SHOWS', 1);
+	require_once(dirname(__FILE__).'/helper.php');
+	require_once(dirname(__FILE__).'/cache.php');
+}
 
 $cache = new modLcaCache($params);
 $helper = new modLcaHelper($params);
@@ -21,5 +22,4 @@ if (!$cache->check()) {
 	if (!$data) return;
 }
 $helper->addTags();
-define('LCA_SHOWS', 1);
 require(JModuleHelper::getLayoutPath('mod_lca'));
