@@ -42,7 +42,7 @@ var lca = {
 		if (n == 1)
 			lca.month_opened = id;
 		else
-			lca.years_opened = id;
+			lca.year_opened = id;
 	},
 	onLoad: function(func) {
 		if (window.addEventListener) window.addEventListener("load", func, false);
