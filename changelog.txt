@@ -1,3 +1,7 @@
+17 Nov 2013 - v1.0.8
+
+# Fix bug when collapse a year (thanks carole)
+
 05 May 2013 - v1.0.7
 
 + Added hu-HU language file (thanks jtherczeg)
