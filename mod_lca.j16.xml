@@ -2,8 +2,8 @@
 <!DOCTYPE extension>
 <extension method="upgrade" type="module" version="1.6.0">
 	<name>mod_lca</name>
-	<creationDate>05 May 2013</creationDate>
-	<version>1.0.7</version>
+	<creationDate>17 Nov 2013</creationDate>
+	<version>1.0.8</version>
 	<author>JoniJnm.es</author>
 	<description>Mod LCA shows articles sorted by year and month, such as wordpress or blogspot.</description>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
