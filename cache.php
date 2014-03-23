@@ -29,7 +29,10 @@ class modLcaCache {
 		print_r($this->params);
 		$html = ob_get_contents();
 		@ob_end_clean();
-		$md5 = md5($html.'_'.self::CVERSION);
+		$user = JFactory::getUser();
+		$loged = $user->id ? 1 : 0;
+		$str = $html.'_'.$loged.'_'.self::CVERSION;
+		$md5 = md5($str);
 		$this->file = $this->path.$md5.'.xml';
 		$this->expired = $this->loadXML($this->file);
 	}
