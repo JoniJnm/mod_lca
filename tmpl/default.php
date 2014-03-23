@@ -1,7 +1,7 @@
 <?php 
 
 /**
-* @Copyright Copyright (C) 2013 - JoniJnm.es
+* @Copyright Copyright (C) 2014 - JoniJnm.es
 * @license GNU/GPL http://www.gnu.org/copyleft/gpl.html
 **/
 
