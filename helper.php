@@ -99,6 +99,7 @@ class modLcaHelper {
 		else
 			$access = ' AND (a.access='.($this->j15?0:1).')';
 		
+		$o_article = $this->params->get("o_article", "desc");
 		$query = 'SELECT '.
 			$order.' '.
 			$section.' '.
@@ -114,7 +115,7 @@ class modLcaHelper {
 			' AND c.published = 1'.
 			$secs.
 			$cats.
-			' ORDER BY co '.$this->params->get("o_article", "desc");
+			' ORDER BY co '.$o_article;
 		if ($this->params->get("maxarticles", 150) > 0)
 			$query .= ' LIMIT '.$this->params->get("maxarticles", 150);
 		$db->setQuery($query);
@@ -124,7 +125,9 @@ class modLcaHelper {
 			return $data;
 		}
 
-		$monthsArray = $this->getMonths($this->params->get("o_month") == "desc");
+		$o_month = $this->params->get("o_month");
+		$descOrderForMonths = $o_month == "desc" || ($o_month == "off" && $o_article == 'desc');
+		$monthsArray = $this->getMonths($descOrderForMonths);
 		
 		foreach ($rows as $row) {
 			$d = $this->getYear($row->co);
