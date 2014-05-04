@@ -49,4 +49,4 @@ var lca = {
 		else if (window.attachEvent) window.attachEvent("onload", func);
 		else (func)();
 	}
-}
+};
