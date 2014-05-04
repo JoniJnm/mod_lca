@@ -106,7 +106,7 @@ class modLcaHelper {
 		if ($this->itemid && strpos($url, "&Itemid=") === false) $url .= '&Itemid='.$this->itemid;
 		$url = JRoute::_($url);
 		if ($cut_title && strlen($row->title) > $cut_title)
-			$row->title = substr($row->title, 0, $cut_title).'...';
+			$row->title = substr($row->title, 0, $cut_title).'…';
 		if ($this->params->get('date', 0))
 			return '<span style="cursor:pointer" title="'.$this->getDate($row->co).'">'.$this->getDay($row->co).'</span> - <a href="'.$url.'">'.$row->title.'</a>';
 		else
