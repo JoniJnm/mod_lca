@@ -46,20 +46,20 @@
 					<option value="years_months">MOD_LCA_LIST_YEARS_MONTHS</option>
 					<option value="years">MOD_LCA_LIST_YEARS</option>
 				</field>
-				<field type="list" default="desc" name="o_sec" label="MOD_LCA_O_SECS_T" description="MOD_LCA_O_SECS_D">
-					<option value="desc">MOD_LCA_DESC</option>
-					<option value="asc">MOD_LCA_ASC</option>
-				</field>
-				<field type="list" default="desc" name="o_cat" label="MOD_LCA_O_CATS_T" description="MOD_LCA_O_CATS_D">
-					<option value="desc">MOD_LCA_DESC</option>
-					<option value="asc">MOD_LCA_ASC</option>
-				</field>
 				<field type="list" default="2" name="order" label="MOD_LCA_ORDER">
 					<option value="0">MOD_LCA_ORDER_CREATED</option>
 					<option value="1">MOD_LCA_ORDER_MODIFIED</option>
 					<option value="2">MOD_LCA_ORDER_PUBLISHED</option>
 				</field>
 				<field type="list" default="desc" name="o_article" label="MOD_LCA_O_ARTICLES">
+					<option value="desc">MOD_LCA_DESC</option>
+					<option value="asc">MOD_LCA_ASC</option>
+				</field>
+				<field type="list" default="desc" name="o_sec" label="MOD_LCA_O_SECS_T" description="MOD_LCA_O_SECS_D">
+					<option value="desc">MOD_LCA_DESC</option>
+					<option value="asc">MOD_LCA_ASC</option>
+				</field>
+				<field type="list" default="desc" name="o_cat" label="MOD_LCA_O_CATS_T" description="MOD_LCA_O_CATS_D">
 					<option value="desc">MOD_LCA_DESC</option>
 					<option value="asc">MOD_LCA_ASC</option>
 				</field>
