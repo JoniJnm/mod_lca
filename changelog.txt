@@ -1,3 +1,7 @@
+22 Apr 2014 - v1.2
+
+# Fix bug ordering articles (thanks chrisjclay)
+
 17 Nov 2013 - v1.0.8
 
 # Fix bug when collapse a year (thanks carole)
