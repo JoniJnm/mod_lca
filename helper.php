@@ -45,19 +45,14 @@ class modLcaHelper {
 			$document->addScript(JURI::base().'modules/mod_lca/assets/js/lca.js');
 		}
 	}
-	function &getList() {
+	private function getRows() {
 		$db = JFactory::getDBO();
 		$date = JFactory::getDate();
 		$user = JFactory::getUser();
-		$nullDate	= $db->getNullDate();
+		$nullDate = $db->getNullDate();
 		$now = method_exists($date, 'toMySQL') ? $date->toMySQL() : $date->toSql();
 		
-		$out = (object)array();
-		$out->articulos = array();
-		$out->years = array();
-		$out->meses = array();
-		
-		if (!$this->params->get('show_pub_articles') && !$this->params->get('archived')) return $out;
+		if (!$this->params->get('show_pub_articles') && !$this->params->get('archived')) return array();
 		
 		if ($this->params->get('show_pub_articles') && $this->params->get('archived'))
 			$state = '(a.state = 1 OR a.state = 2)';
@@ -75,14 +70,12 @@ class modLcaHelper {
 			$order = 'a.publish_up AS co,';
 		
 		$cats = trim($this->params->get("cats", "")) ? " AND a.catid IN (".$this->params->get("cats", "").")" : "";
-		$maxyears = $this->params->get("maxyears", 0);
 		
 		if ($user->id)
 			$access = ' AND (a.access=1 OR a.access=2)';
 		else
 			$access = ' AND (a.access=1)';
 		
-		$o_article = $this->params->get("o_article", "desc");
 		$query = 'SELECT '.
 			$order.' '.
 			'a.id, a.title, a.alias, a.catid, c.alias as calias'.
@@ -94,63 +87,93 @@ class modLcaHelper {
 			' AND ( a.publish_down = '.$db->Quote($nullDate).' OR a.publish_down >= '.$db->Quote($now).' )'.
 			' AND c.published = 1'.
 			$cats.
-			' ORDER BY co '.$o_article;
+			' ORDER BY co '.$this->params->get("o_article", "desc");
 		if ($this->params->get("maxarticles", 150) > 0)
 			$query .= ' LIMIT '.$this->params->get("maxarticles", 150);
 		$db->setQuery($query);
-		$rows = $db->loadObjectList();
-		if (!$rows) {
-			$data = null;
-			return $data;
+		return $db->loadObjectList();
+	}
+	function getList() {
+		$rows = $this->getRows();
+		if (!$rows) return array();
+		$list = $this->params->get("list", "year_month");
+		if ($list == 'years_months') return $this->list2($rows, 'getYearByRow', 'getMonthByRow');
+		elseif ($list == 'years') return $this->list1($rows, 'getYearByRow');
+	}
+	private function getArticleHTML(&$row) {
+		$cut_title = $this->params->get("cut_title", 0);
+		$url = ContentHelperRoute::getArticleRoute($row->id.":".$row->alias, $row->catid.":".$row->calias);
+		if ($this->itemid && strpos($url, "&Itemid=") === false) $url .= '&Itemid='.$this->itemid;
+		$url = JRoute::_($url);
+		if ($cut_title && strlen($row->title) > $cut_title)
+			$row->title = substr($row->title, 0, $cut_title).'...';
+		if ($this->params->get('date', 0))
+			return '<span style="cursor:pointer" title="'.$this->getDate($row->co).'">'.$this->getDay($row->co).'</span> - <a href="'.$url.'">'.$row->title.'</a>';
+		else
+			return '<a href="'.$url.'">'.$row->title.'</a>';
+	}
+	private function getYearByRow($row) {
+		return $this->getYear($row->co);
+	}
+	private function getMonthByRow($row) {
+		$m = $this->getMonth($row->co);
+		return $this->monthToString($m);
+	}
+	private function getCategoryByRow($row) {
+		return $row->ctitle;
+	}
+	private function list2(&$rows, $f_get_sec, $f_get_cat) {
+		$out = $this->createDefaultOut();
+		
+		$cats = array();
+		foreach ($rows as $row) {
+			$cat = call_user_func(array($this, $f_get_cat), $row);
+			if (!isset($cats[$cat])) $cats[$cat] = array();
 		}
-
-		$o_month = $this->params->get("o_month");
-		$descOrderForMonths = $o_month == "desc" || ($o_month == "off" && $o_article == 'desc');
-		$monthsArray = $this->getMonths($descOrderForMonths);
+		if ($out->o_cat == 'desc') rsort($cats);
+		else ksort($cats);
 		
 		foreach ($rows as $row) {
-			$d = $this->getYear($row->co);
-			if (!isset($out->articulos[$d])) 
-				$out->articulos[$d] = $monthsArray;
-		}
-		
-		krsort($out->articulos);
-		
-		if ($maxyears) {
-			$i = 0;
-			foreach ($out->articulos as $year=>$months) {
-				if ($i == $maxyears) unset($out->articulos[$year]);
-				else $i++;
-			}
-		}
-		
-		if ($this->params->get("o_year", "desc") == "asc") ksort($out->articulos);
-		
-		$cut_title   = $this->params->get("cut_title", 0);
-		foreach ($rows as $row) {
-			$d = $this->getYear($row->co);
-			$m = $this->getMonth($row->co);
+			$sec = call_user_func(array($this, $f_get_sec), $row);
+			$cat = call_user_func(array($this, $f_get_cat), $row);
 			
-			if (isset($out->articulos[$d])) {
-				$out->lastyear = $d;
-				$url = ContentHelperRoute::getArticleRoute($row->id.":".$row->alias, $row->catid.":".$row->calias);
-				if ($this->itemid && strpos($url, "&Itemid=") === false) $url .= '&Itemid='.$this->itemid;
-				$link = JRoute::_($url);
-				$month = $this->monthToString($m);
-				if ($cut_title && strlen($row->title) > $cut_title)
-					$row->title = substr($row->title, 0, $cut_title).'...';
-				if ($this->params->get('date', 0))
-					$out->articulos[$d][$month][] = '<span style="cursor:pointer" title="'.$this->getDate($row->co).'">'.$this->getDay($row->co).'</span> - <a href="'.$link.'">'.$row->title.'</a>';
-				else
-					$out->articulos[$d][$month][] = '<a href="'.$link.'">'.$row->title.'</a>';
-				$out->years[$d] = isset($out->years[$d]) ? $out->years[$d]+1 : 1;
-				if (!isset($out->meses[$d])) $out->meses[$d] = array();
-				$out->meses[$d][$month] = isset($out->meses[$d][$month]) ? $out->meses[$d][$month]+1 : 1;
-			}
+			if (isset($out->secs[$sec])) $out->secs[$sec]++;
+			else $out->secs[$sec] = 1;
+			
+			if (!isset($out->cats[$sec])) $out->cats[$sec] = array();
+			if (isset($out->cats[$sec][$cat])) $out->cats[$sec][$cat]++;
+			else $out->cats[$sec][$cat] = 1;
+			
+			if (!isset($out->articulos[$sec])) $out->articulos[$sec] = $cats;
+			$out->articulos[$sec][$cat][] = $this->getArticleHTML($row);
 		}
+		if ($out->o_sec == 'desc') krsort($out->articulos);
+		else ksort($out->articulos);
 		return $out;
 	}
-	
+	private function &list1(&$rows, $f_get_sec) {
+		$out = $this->createDefaultOut();
+		
+		foreach ($rows as $row) {
+			$sec = call_user_func(array($this, $f_get_sec), $row);
+			if (!isset($out->articulos[$sec])) $out->articulos[$sec] = array();
+			$out->articulos[$sec][] = $this->getArticleHTML($row);
+			if (isset($out->secs[$sec])) $out->secs[$sec]++;
+			else $out->secs[$sec] = 1;
+		}
+		if ($out->o_sec == 'desc') krsort($out->articulos);
+		else ksort($out->articulos);
+		return $out;
+	}
+	private function &createDefaultOut() {
+		$out = (object)array();
+		$out->articulos = array();
+		$out->secs = array();
+		$out->cats = array();
+		$out->o_sec = $this->params->get('o_sec', 'desc');
+		$out->o_cat = $this->params->get('o_cat', 'desc');
+		return $out;
+	}
 	private function getItemid() {
 		$db = JFactory::getDBO();
 		
@@ -183,21 +206,12 @@ class modLcaHelper {
 		$date = explode("-", $date);
 		return $date[2];
 	}
-	private function getMonths($desc) {
-		$months = array();
-		if ($desc) {
-			for ($i=12;$i>0;$i--)
-				$months[$this->monthToString($i)] = array();
-		}
-		else {
-			for ($i=1;$i<=12;$i++)
-				$months[$this->monthToString($i)] = array();
-		}	
-		return $months;
-	}
 	private function monthToString($month) {
-		$data = array('', JText::_('JANUARY'), JText::_('FEBRUARY'), JText::_('MARCH'), JText::_('APRIL'), JText::_('MAY'), JText::_('JUNE'),
+		static $data = null;
+		if ($data === null) {
+			$data = array('', JText::_('JANUARY'), JText::_('FEBRUARY'), JText::_('MARCH'), JText::_('APRIL'), JText::_('MAY'), JText::_('JUNE'),
 					JText::_('JULY'), JText::_('AUGUST'), JText::_('SEPTEMBER'), JText::_('OCTOBER'), JText::_('NOVEMBER'), JText::_('DECEMBER'));
-		return $data[(int)$month];
+		}
+		return $data[intval($month)];
 	}
 }

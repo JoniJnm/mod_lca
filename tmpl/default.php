@@ -12,63 +12,68 @@ if ($cache->check()) {
 }
 else {
 	$cache->start();
-	$o_year = $params->get("o_year", "desc") == "desc";
-	$cache->o_month = $params->get("o_month", "desc");
 	$show_number = $params->get("show_number", 1);
 	$search = 0;
 	$img = $params->get("img", 0);
 	$collapse = $helper->getImg($img);
 	$collapse = $collapse->collapse;
-	$iyear = 1;
-	$imonth = 1;
+	$isec = 1;
+	$icat = 1;
 
 	echo '<ul class="lca">';
-	foreach ($data->articulos as $year=>$months) {
+	foreach ($data->articulos as $sec=>$cat) {
 		echo '<li class="lca">';
-			echo '<span onclick="lca.f(0,'.$iyear.')" class="lca">';
+			echo '<span onclick="lca.f(0,'.$isec.')" class="lca">';
 			if ($img)
-				echo '<img id="lca_0a_'.$iyear.'" class="lca" src="'.$collapse.'" alt="" />';
+				echo '<img id="lca_0a_'.$isec.'" class="lca" src="'.$collapse.'" alt="" />';
 			else 
-				echo '<span id="lca_0a_'.$iyear.'">'.$collapse.'</span>';
-			echo ' '.$year.'</span>';
+				echo '<span id="lca_0a_'.$isec.'">'.$collapse.'</span>';
+			echo ' '.$sec.'</span>';
 			if ($show_number)
-				echo ' ('.$data->years[$year].')';
-			echo '<ul class="lca" id="lca_0_'.$iyear.'" style="display: none">';
-			foreach ($months as $month=>$articles) {
-				if (count($articles)) {
-					if ($o_year) {
-						if ($cache->o_month == 'desc')
+				echo ' ('.$data->secs[$sec].')';
+			echo '<ul class="lca" id="lca_0_'.$isec.'" style="display: none">';
+			if (!$data->cats) {
+				//list1 | $cats => $articles;
+				foreach ($cats as $article) {
+					echo '<li class="lca">• '.$article.'</li>';
+				}
+			}
+			else {
+				foreach ($cats as $cat=>$articles) {
+					if (!count($articles)) continue;
+					if ($data->o_sec == 'desc') {
+						if ($data->o_cat == 'desc')
 						$search = 1;
-						elseif ($iyear == 1)
-							$search = $imonth;
+						elseif ($isec == 1)
+							$search = $icat;
 					}
-					elseif ($iyear == count($data->articulos) && ($cache->o_month == 'asc' || !$search))
-						$search = $imonth;	
+					elseif ($isec == count($data->articulos) && ($data->o_cat == 'asc' || !$search))
+						$search = $icat;	
 					echo '<li class="lca">';
-						echo '<span onclick="lca.f(1,'.$imonth.')" class="lca">';
+						echo '<span onclick="lca.f(1,'.$icat.')" class="lca">';
 						if ($img)
-							echo '<img id="lca_1a_'.$imonth.'" class="lca" src="'.$collapse.'" alt="" />';
+							echo '<img id="lca_1a_'.$icat.'" class="lca" src="'.$collapse.'" alt="" />';
 						else
-							echo '<span id="lca_1a_'.$imonth.'">'.$collapse.'</span>';
-						echo ' '.$month.'</span>';
+							echo '<span id="lca_1a_'.$icat.'">'.$collapse.'</span>';
+						echo ' '.$cat.'</span>';
 						if ($show_number)
-							echo ' ('.$data->meses[$year][$month].')';
-						echo '<ul class="lca" id="lca_1_'.$imonth.'" style="display: none">';
+							echo ' ('.$data->cats[$sec][$cat].')';
+						echo '<ul class="lca" id="lca_1_'.$icat.'" style="display: none">';
 						foreach ($articles as $article)
 							 echo '<li class="lca">• '.$article.'</li>';
 						echo '</ul>';
 					echo '</li>';
-					$imonth++;
+					$icat++;
 				}
 			}
 			echo '</ul>';
 		echo '</li>';
-		$iyear++;
+		$isec++;
 	}
 	echo '</ul>';
 	//buy pro version to hide copyright http://www.jonijnm.es/web/mod-lca.html
 	echo '<div style="text-align:right;font-size:xx-small">Powered by <a title="Module LCA for Joomla" href="http://www.jonijnm.es">mod LCA</a></div>';
-	$cache->show = ($o_year?1:count($data->articulos)).','.$search;
+	$cache->show = ($data->o_sec=='desc'?1:count($data->articulos)).','.$search;
 	$cache->end();
 }
 

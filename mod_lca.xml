@@ -3,12 +3,11 @@
 <extension method="upgrade" type="module" version="1.6.0">
 	<name>mod_lca</name>
 	<creationDate>05 May 2014</creationDate>
-	<version>1.1</version>
+	<version>1.3</version>
 	<author>JoniJnm.es</author>
 	<description>Mod LCA shows articles sorted by year and month, such as wordpress or blogspot.</description>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	
-	<scriptfile>install.script.php</scriptfile>
 	<files>
 		<filename module="mod_lca">mod_lca.php</filename>
 		<filename>index.html</filename>
@@ -43,18 +42,22 @@
 					<option value="0">MOD_LCA_NO</option>
 					<option value="1">MOD_LCA_YES</option>
 				</field>
+				<field type="list" default="years_months" name="list" label="MOD_LCA_SHOW_LIST_AS_T" description="MOD_LCA_SHOW_LIST_AS_D">
+					<option value="years_months">MOD_LCA_LIST_YEARS_MONTHS</option>
+					<option value="years">MOD_LCA_LIST_YEARS</option>
+				</field>
+				<field type="list" default="desc" name="o_sec" label="MOD_LCA_O_SECS_T" description="MOD_LCA_O_SECS_D">
+					<option value="desc">MOD_LCA_DESC</option>
+					<option value="asc">MOD_LCA_ASC</option>
+				</field>
+				<field type="list" default="desc" name="o_cat" label="MOD_LCA_O_CATS_T" description="MOD_LCA_O_CATS_D">
+					<option value="desc">MOD_LCA_DESC</option>
+					<option value="asc">MOD_LCA_ASC</option>
+				</field>
 				<field type="list" default="2" name="order" label="MOD_LCA_ORDER">
 					<option value="0">MOD_LCA_ORDER_CREATED</option>
 					<option value="1">MOD_LCA_ORDER_MODIFIED</option>
 					<option value="2">MOD_LCA_ORDER_PUBLISHED</option>
-				</field>
-				<field type="list" default="desc" name="o_year" label="MOD_LCA_O_YEARS">
-					<option value="desc">MOD_LCA_DESC</option>
-					<option value="asc">MOD_LCA_ASC</option>
-				</field>
-				<field type="list" default="desc" name="o_month" label="MOD_LCA_O_MONTHS">
-					<option value="desc">MOD_LCA_DESC</option>
-					<option value="asc">MOD_LCA_ASC</option>
 				</field>
 				<field type="list" default="desc" name="o_article" label="MOD_LCA_O_ARTICLES">
 					<option value="desc">MOD_LCA_DESC</option>
@@ -78,7 +81,6 @@
 					<option value="0">MOD_LCA_NO</option>
 				</field>
 				<field type="text" default="150" name="maxarticles" label="MOD_LCA_MAXARTICLES_T" description="MOD_LCA_MAXARTICLES_D" />
-				<field type="text" default="0" name="maxyears" label="MOD_LCA_MAXYEARS" />
 				<field type="text" name="cats" label="MOD_LCA_CATS_T" description="MOD_LCA_CATS_D" />
 			</fieldset>
 		</fields>
