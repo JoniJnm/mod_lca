@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE install>
-<install method="upgrade" type="module" version="1.5.0">
+<!DOCTYPE extension>
+<extension method="upgrade" type="module" version="1.6.0">
 	<name>mod_lca</name>
-	<creationDate>17 Nov 2013</creationDate>
-	<version>1.0.8</version>
+	<creationDate>05 May 2014</creationDate>
+	<version>1.1</version>
 	<author>JoniJnm.es</author>
 	<description>Mod LCA shows articles sorted by year and month, such as wordpress or blogspot.</description>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	
+	<scriptfile>install.script.php</scriptfile>
 	<files>
 		<filename module="mod_lca">mod_lca.php</filename>
 		<filename>index.html</filename>
@@ -24,59 +26,61 @@
 		<language tag="fr-FR">fr-FR.mod_lca.ini</language>
 		<language tag="hu-HU">hu-HU.mod_lca.ini</language>
 	</languages>
-	<params>
-		<param name="usecache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module">
-			<option value="1">MOD_LCA_YES</option>
-			<option value="0">MOD_LCA_NO</option>
-		</param>
-		<param name="cache_time" type="text" default="900" label="Cache Time" description="The time before the module is recached" />
-		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
-		<param name="@spacer" type="spacer" default="" label="" description="" />
-		<param type="list" default="1" name="show_pub_articles" label="MOD_LCA_PUB_ARTICLES_T">
-			<option value="0">MOD_LCA_NO</option>
-			<option value="1">MOD_LCA_YES</option>
-		</param>
-		<param type="list" default="0" name="archived" label="MOD_LCA_SHOW_ARCHIVED" >
-			<option value="0">MOD_LCA_NO</option>
-			<option value="1">MOD_LCA_YES</option>
-		</param>
-		<param type="list" default="2" name="order" label="MOD_LCA_ORDER">
-			<option value="0">MOD_LCA_ORDER_CREATED</option>
-			<option value="1">MOD_LCA_ORDER_MODIFIED</option>
-			<option value="2">MOD_LCA_ORDER_PUBLISHED</option>
-		</param>
-		<param type="list" default="desc" name="o_year" label="MOD_LCA_O_YEARS">
-			<option value="desc">MOD_LCA_DESC</option>
-			<option value="asc">MOD_LCA_ASC</option>
-		</param>
-		<param type="list" default="desc" name="o_month" label="MOD_LCA_O_MONTHS">
-			<option value="desc">MOD_LCA_DESC</option>
-			<option value="asc">MOD_LCA_ASC</option>
-		</param>
-		<param type="list" default="desc" name="o_article" label="MOD_LCA_O_ARTICLES">
-			<option value="desc">MOD_LCA_DESC</option>
-			<option value="asc">MOD_LCA_ASC</option>
-		</param>
-		<param type="list" default="0" name="date" label="MOD_LCA_SHOW_DATE">
-			<option value="1">MOD_LCA_YES</option>
-			<option value="0">MOD_LCA_NO</option>
-		</param>
-		<param type="text" default="0" name="cut_title" label="MOD_LCA_CUTTITLE_T" description="MOD_LCA_CUTTITLE_D" />
-		<param type="list" default="0" name="img" label="MOD_LCA_IMG_T" description="MOD_LCA_IMG_D">
-			<option value="1">MOD_LCA_YES</option>
-			<option value="0">MOD_LCA_NO</option>
-		</param>
-		<param type="list" default="1" name="show_number" label="MOD_LCA_SHOW_ARTICLES">
-			<option value="1">MOD_LCA_YES</option>
-			<option value="0">MOD_LCA_NO</option>
-		</param>
-		<param type="list" default="0" name="allways_collapsed" label="MOD_LCA_ALLWAYS_COLLAPSED">
-			<option value="1">MOD_LCA_YES</option>
-			<option value="0">MOD_LCA_NO</option>
-		</param>
-		<param type="text" default="150" name="maxarticles" label="MOD_LCA_MAXARTICLES_T" description="MOD_LCA_MAXARTICLES_D" />
-		<param type="text" default="0" name="maxyears" label="MOD_LCA_MAXYEARS" />
-		<param type="text" name="secs" label="MOD_LCA_SECS_T" description="MOD_LCA_SECS_D" />
-		<param type="text" name="cats" label="MOD_LCA_CATS_T" description="MOD_LCA_CATS_D" />
-	</params>
-</install>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="usecache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="1">MOD_LCA_YES</option>
+					<option value="0">MOD_LCA_NO</option>
+				</field>
+				<field name="cache_time" type="text" default="900" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field type="list" default="1" name="show_pub_articles" label="MOD_LCA_PUB_ARTICLES_T">
+					<option value="0">MOD_LCA_NO</option>
+					<option value="1">MOD_LCA_YES</option>
+				</field>
+				<field type="list" default="0" name="archived" label="MOD_LCA_SHOW_ARCHIVED">
+					<option value="0">MOD_LCA_NO</option>
+					<option value="1">MOD_LCA_YES</option>
+				</field>
+				<field type="list" default="2" name="order" label="MOD_LCA_ORDER">
+					<option value="0">MOD_LCA_ORDER_CREATED</option>
+					<option value="1">MOD_LCA_ORDER_MODIFIED</option>
+					<option value="2">MOD_LCA_ORDER_PUBLISHED</option>
+				</field>
+				<field type="list" default="desc" name="o_year" label="MOD_LCA_O_YEARS">
+					<option value="desc">MOD_LCA_DESC</option>
+					<option value="asc">MOD_LCA_ASC</option>
+				</field>
+				<field type="list" default="desc" name="o_month" label="MOD_LCA_O_MONTHS">
+					<option value="desc">MOD_LCA_DESC</option>
+					<option value="asc">MOD_LCA_ASC</option>
+				</field>
+				<field type="list" default="desc" name="o_article" label="MOD_LCA_O_ARTICLES">
+					<option value="desc">MOD_LCA_DESC</option>
+					<option value="asc">MOD_LCA_ASC</option>
+				</field>
+				<field type="list" default="0" name="date" label="MOD_LCA_SHOW_DATE">
+					<option value="1">MOD_LCA_YES</option>
+					<option value="0">MOD_LCA_NO</option>
+				</field>
+				<field type="text" default="0" name="cut_title" label="MOD_LCA_CUTTITLE_T" description="MOD_LCA_CUTTITLE_D" />
+				<field type="list" default="0" name="img" label="MOD_LCA_IMG_T" description="MOD_LCA_IMG_D">
+					<option value="1">MOD_LCA_YES</option>
+					<option value="0">MOD_LCA_NO</option>
+				</field>
+				<field type="list" default="1" name="show_number" label="MOD_LCA_SHOW_ARTICLES">
+					<option value="1">MOD_LCA_YES</option>
+					<option value="0">MOD_LCA_NO</option>
+				</field>
+				<field type="list" default="0" name="allways_collapsed" label="MOD_LCA_ALLWAYS_COLLAPSED">
+					<option value="1">MOD_LCA_YES</option>
+					<option value="0">MOD_LCA_NO</option>
+				</field>
+				<field type="text" default="150" name="maxarticles" label="MOD_LCA_MAXARTICLES_T" description="MOD_LCA_MAXARTICLES_D" />
+				<field type="text" default="0" name="maxyears" label="MOD_LCA_MAXYEARS" />
+				<field type="text" name="cats" label="MOD_LCA_CATS_T" description="MOD_LCA_CATS_D" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>
