@@ -21,7 +21,7 @@ else {
 	$icat = 1;
 
 	echo '<ul class="lca">';
-	foreach ($data->articulos as $sec=>$cat) {
+	foreach ($data->articulos as $sec=>$cats) {
 		echo '<li class="lca">';
 			echo '<span onclick="lca.f(0,'.$isec.')" class="lca">';
 			if ($img)
