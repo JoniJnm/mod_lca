@@ -3,7 +3,7 @@
 <extension method="upgrade" type="module" version="1.6.0">
 	<name>mod_lca</name>
 	<creationDate>05 May 2014</creationDate>
-	<version>1.3</version>
+	<version>1.2</version>
 	<author>JoniJnm.es</author>
 	<description>Mod LCA shows articles sorted by year and month, such as wordpress or blogspot.</description>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>

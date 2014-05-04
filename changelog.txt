@@ -1,7 +1,7 @@
-04 May 2014 - v1.3
+04 May 2014 - v1.2
 
 ^ Parts of code rewrited
-+ Allow to show only years without months
++ Allow to list by years without months
 # Fix bug ordering articles (thanks chrisjclay)
 
 17 Nov 2013 - v1.0.8
